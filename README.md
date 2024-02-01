@@ -9,7 +9,7 @@
 
 <br/>
 
-## [전화번호 목룍](https://www.acmicpc.net/problem/5052)
+## [전화번호 목록](https://www.acmicpc.net/problem/5052)
 
 ### [민웅](./전화번호%20목록/민웅.py)
 
@@ -55,7 +55,64 @@
 ### [민웅](./단어의%20적합성%20판단/민웅.py)
 
 ```py
+import sys
+input = sys.stdin.readline
 
+vowels = ['a', 'e', 'i', 'o', 'u']
+exc = ['e', 'o']
+
+N = int(input())
+
+
+
+for _ in range(N):
+    word = list(input().strip())
+    l = len(word)
+
+    is_vowel = False
+    before_word = word[0]
+    in_vowel = False
+    
+    sequential = 1
+
+    ans = True
+
+    if word[0] in vowels:
+        is_vowel = True
+        in_vowel = True
+    if l > 1:
+        for i in range(1, l):
+            tmp = word[i]
+            if tmp in vowels:
+                in_vowel = True
+                if is_vowel:
+                    sequential += 1
+                else:
+                    is_vowel = True
+                    sequential = 1
+            else:
+                if is_vowel:
+                    is_vowel = False
+                    sequential = 1
+                else:
+                    sequential += 1
+            if tmp == before_word:
+                if tmp not in exc:
+                    ans = False
+                    break
+            before_word = tmp
+
+            if sequential >= 3:
+                ans = False
+                break
+            
+    if not in_vowel:
+        ans = False
+
+    if ans:
+        print(1)
+    else:
+        print(0)
 ```
 
 ### [병국](./단어의%20적합성%20판단/병국.py)
@@ -189,7 +246,106 @@ if __name__ == "__main__":
 ### [민웅](./블럭%20놀이/민웅.py)
 
 ```py
+import sys
+input = sys.stdin.readline
 
+dxy = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+def go_up(board):
+    for i in range(M):
+        nums = []
+        cnt = -1
+        for j in range(N):
+            tmp = board[j][i]
+            if tmp != 0:
+                nums.append(tmp)
+                cnt += 1
+                board[j][i] = 0
+        while cnt != -1:
+            board[cnt][i] = nums.pop()
+            cnt -= 1
+    
+    return board
+
+def go_down(board):
+    for i in range(M):
+        nums = []
+        cnt = -1
+        for j in range(N):
+            tmp = board[j][i]
+            if tmp != 0:
+                nums.append(tmp)
+                cnt += 1
+                board[j][i] = 0
+        idx = 0
+        while cnt != -1:
+            board[N-1-idx][i] = nums.pop()
+            cnt -= 1
+            idx += 1
+    return board
+
+def bomb(board):
+    visited = [[0]*M for _ in range(N)]
+    check = []
+    for i in range(N):
+        for j in range(M):
+            if not visited[i][j]:
+                if board[i][j]:
+                    visited[i][j] = 1
+                    tmp = board[i][j]
+                    tmp_checker = False
+                    for d in dxy:
+                        nx = i + d[0]
+                        ny = j + d[1]
+
+                        if 0 <= nx <= N-1 and 0 <= ny <= M-1:
+                            visited[nx][ny] = 1
+                            if board[nx][ny] == tmp:
+                                check.append([nx, ny])
+                                tmp_checker = True
+                    if tmp_checker:
+                        check.append([i, j])
+    for v in check:
+        board[v[0], v[1]] = 0
+    
+    return board
+
+
+
+N, M, Q = map(int, input().split())
+
+board = [[0]*M for _ in range(N)]
+
+for _ in range(Q):
+    order, *remain = map(int, input().split())
+    if order == 1:
+        x, y, num = remain[0], remain[1], remain[2]
+        x -= 1
+        y -= 1
+        if board[x][y] == 0 or board[x][y] < num:
+            board[x][y] = num
+    elif order == 2:
+        while True:
+            board = go_up(board)
+            board_check = [[board[i][j] for j in range(M)] for i in range(N)]
+            board = bomb(board)
+            if board_check == board:
+                break
+    elif order == 3:
+        while True:
+            board = go_down(board)
+            board_check = [[board[i][j] for j in range(M)] for i in range(N)]
+            board = bomb(board)
+            if board_check == board:
+                break
+    else:
+        x, y = remain[0], remain[1]
+        x -= 1
+        y -= 1
+        board[x][y] = 0
+
+for line in board:
+    print(*line)
 ```
 
 ### [병국](./블럭%20놀이/병국.py)
@@ -297,7 +453,34 @@ for _ in range(Q):
 ### [민웅](./숫자가%20겹치지%20않는%20구간/민웅.py)
 
 ```py
+import sys
+input = sys.stdin.readline
 
+N = int(input())
+
+lst = list(map(int, input().split()))
+num_dict = {}
+i, j = 0, 0
+ans = 0
+while j < N:
+    tmp = lst[j]
+    if tmp not in num_dict.keys():
+        num_dict[tmp] = 1
+    else:
+        if num_dict[tmp] == 1:
+            while i < j:
+                if lst[i] == tmp:
+                    i += 1
+                    break
+                else:
+                    num_dict[lst[i]] -= 1
+                    i += 1
+        else:
+            num_dict[tmp] += 1
+    if (j - i + 1) > ans:
+        ans = (j - i + 1)
+    j += 1
+print(ans)
 ```
 
 ### [병국](./숫자가%20겹치지%20않는%20구간/병국.py)
