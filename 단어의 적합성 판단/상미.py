@@ -24,7 +24,7 @@ for _ in range(n):
     else:
         cond2 = True
 
-    for i in range(len(word)-1):
+    for i in range(len(word)-1):        # 세번째 조건
         if word[i] == word[i+1] and word[i] not in ['e', 'o']:
             break
     else:
