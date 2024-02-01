@@ -1,8 +1,11 @@
 # 21th_study
+<br/>
 
 # 이번주 스터디 문제
 <details markdown="1" open>
 <summary>접기/펼치기</summary>
+
+<br/>
 
 ## [전화번호 목룍](https://www.acmicpc.net/problem/5052)
 ### [민웅](./전화번호%20목록/민웅.py)
@@ -21,6 +24,8 @@
 ```py
 ```
 </details>
+
+<br/><br/>
 
 # 지난주 스터디 문제
 
@@ -218,11 +223,35 @@ for _ in range(Q):
 ```
 ### [성구](./숫자가%20겹치지%20않는%20구간/성구.py)
 ```py
+import sys
+from collections import deque
+input = sys.stdin.readline
+
+def solution():
+    N = int(input())
+    arr = list(map(int, input().split()))
+    visited = set()
+    stack = deque([])
+    maxlen = -1
+    for i in range(N):
+        if stack:
+            maxlen = max(maxlen, len(stack))
+            while stack and arr[i] in visited:
+                s = stack.popleft()
+                visited.discard(s)
+        stack.append(arr[i])
+        visited.add(arr[i])
+    print(maxlen)
+
+if __name__ == "__main__":
+    solution()
 ```
 ### [승우](./숫자가%20겹치지%20않는%20구간/승우.py)
 ```py
 ```
 </details>
+
+<br/><br/>
 
 # 알고리즘 설명
 <details markdown="1">
