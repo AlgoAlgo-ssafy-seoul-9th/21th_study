@@ -853,4 +853,7 @@ if __name__ == "__main__":
 
 <details markdown="1">
 <summary>접기/펼치기</summary>
+
+<a href="https://l1m3kun.tistory.com/entry/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EB%AC%B8%EC%9E%90%EC%97%B4-%ED%8A%B8%EB%9D%BC%EC%9D%B4Trie">바로가기</a>
+
 </details>
