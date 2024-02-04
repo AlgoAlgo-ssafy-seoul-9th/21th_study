@@ -72,7 +72,7 @@ class Trie:
     def __init__(self) -> None:
         # 가장 최상위 루트, 시작점
         self.root = Node(None)
-    
+
     # 단어를 Trie 에 넣으면서 체크
     def insert(self, string:str) -> bool:
         # root에서 시작
@@ -107,11 +107,11 @@ def solution():
             print("NO")
             # 불필요한 탐색을 줄이기 위한 flag
             flag = 1
-        
+
     else:
         if not flag:
             print("YES")
-    return 
+    return
 
 
 if __name__ == "__main__":
@@ -122,6 +122,25 @@ if __name__ == "__main__":
 ### [승우](./전화번호%20목록/승우.py)
 
 ```py
+import sys
+input = sys.stdin.readline
+
+def check(phonebook):
+    for i in range(len(phonebook) - 1):
+        if phonebook[i] == phonebook[i+1][:len(phonebook[i])]:
+            return False
+    return True
+
+t = int(input())
+for _ in range(t):
+    n = int(input())
+    phonebook = [input().rstrip() for _ in range(n)]
+    phonebook.sort()
+
+    if check(phonebook):
+        print('YES')
+    else:
+        print('NO')
 
 ```
 
@@ -156,7 +175,7 @@ for _ in range(N):
     is_vowel = False
     before_word = word[0]
     in_vowel = False
-    
+
     sequential = 1
 
     ans = True
@@ -189,7 +208,7 @@ for _ in range(N):
             if sequential >= 3:
                 ans = False
                 break
-            
+
     if not in_vowel:
         ans = False
 
@@ -378,7 +397,7 @@ def go_up(board):
         while cnt != -1:
             board[cnt][i] = nums.pop()
             cnt -= 1
-    
+
     return board
 
 def go_down(board):
@@ -421,7 +440,7 @@ def bomb(board):
                         check.append([i, j])
     for v in check:
         board[v[0], v[1]] = 0
-    
+
     return board
 
 
@@ -466,7 +485,7 @@ for line in board:
 
 ```py
 def up():
-    while True:        
+    while True:
         for i in range(m):
             num_arr = []
             for j in range(n):
@@ -484,7 +503,7 @@ def up():
             break
 
 def down():
-    while True:   
+    while True:
         for i in range(m):
             num_arr = []
             for j in range(n):
